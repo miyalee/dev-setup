@@ -10,13 +10,14 @@
     - gnuplot
     - sqlite3
     - libfreetype6-dev
+    - bison
 - name: install rust
   command: bash -c 'curl https://sh.rustup.rs -sSf | sh -s - -y'
   args:
       creates: "{{ ansible_env.HOME }}/.cargo/env"
   #TODO ~/.cargo/bin to $PATH
 - name: install rust nightly
-  command: . {{ ansible_env.HOME }}/.cargo/env && rustup default nightly
+  command: bash -c '. {{ ansible_env.HOME }}/.cargo/env && rustup default nightly'
   # bash rustup.sh --channel=nightly
 - name: install nvm
   shell : curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
@@ -29,6 +30,6 @@
   args:
       creates: "{{ ansible_env.HOME }}/.gvm/scripts/gvm.sh"
 - name: install go1.4
-  shell: . {{ ansible_env.HOME }}/.gvm/scripts/gvm && gvm install go1.4
+  shell: bash -c '. {{ ansible_env.HOME }}/.gvm/scripts/gvm && gvm install go1.4'
 - name: install go1.6.2
-  shell: . {{ ansible_env.HOME }}/.gvm/scripts/gvm && gvm use go1.4 && gvm install go1.6.2
+  shell: bash -c '. {{ ansible_env.HOME }}/.gvm/scripts/gvm && gvm use go1.4 && gvm install go1.6.2'
