@@ -13,8 +13,8 @@
   args:
       creates: dropbox-latest.deb
 - name: get dropbox
-  #get_url: url="https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout.strip }}" dest=dropbox-latest.deb
-  shell: curl --connect-timeout 3 --output "dropbox-latest.deb" --continue-at - --location "https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout.strip }}"
+  #get_url: url="https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout}}" dest=dropbox-latest.deb
+  shell: curl --connect-timeout 3 --output "dropbox-latest.deb" --continue-at - --location "https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout }}"
   args:
       creates: dropbox-latest.deb
 - name: install dropbox
