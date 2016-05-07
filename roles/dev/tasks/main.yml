@@ -11,6 +11,7 @@
     - sqlite3
     - libfreetype6-dev
     - bison
+    - redis-server
 - name: install rust
   command: bash -c 'curl https://sh.rustup.rs -sSf --connect-timeout 3| sh -s - -y'
   args:
