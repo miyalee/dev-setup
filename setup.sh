@@ -49,12 +49,12 @@ main() {
     set +o errexit
 
     ~/.local/bin/ansible-playbook common.yml
-    local action="$2"
-    if [[ $action == "--dev" || $action == "-all" ]]; then
+    local action="$1"
+    if [[ $action == "--dev" || $action == "--all" ]]; then
         ~/.local/bin/ansible-playbook dev.yml
     fi
 
-    if [[ $action == "--desktop" || $action == "-all" ]]; then
+    if [[ $action == "--desktop" || $action == "--all" ]]; then
         ~/.local/bin/ansible-playbook desktop.yml
     fi
 }
