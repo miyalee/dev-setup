@@ -21,23 +21,29 @@ main() {
     sudo apt-get install --yes git python-virtualenv python-pip python-dev libffi-dev libssl-dev
     set +o errexit
 
-    if [[ ! -e ~/.ssh/id_rsa ]]; then
-        ssh-keygen -t rsa -N "" ~/.ssh/id_rsa
-    fi
-    if ! ssh -o PasswordAuthentication=no -T git@$GITLAB_HOST; then
-        echo "Add following public key to $GITLAB_URL/profile/keys"
-        cat ~/.ssh/id_rsa.pub
-        read -t 30 -p "ENTER to continue"
-        if [[ $? -gt 128 ]]; then
-            echo -e "\nAbort..."
-            exit 1
+    # if we are not inside the repo
+    if ! git remote -v >/dev/null; then
+        if [[ ! -e ~/.ssh/id_rsa ]]; then
+            ssh-keygen -t rsa -N "" ~/.ssh/id_rsa
         fi
-    fi
+        if ! ssh -o PasswordAuthentication=no -T git@$GITLAB_HOST; then
+            echo "Add following public key to $GITLAB_URL/profile/keys"
+            cat ~/.ssh/id_rsa.pub
+            read -t 30 -p "ENTER to continue"
+            if [[ $? -gt 128 ]]; then
+                echo -e "\nAbort..."
+                exit 1
+            fi
+        fi
 
-    git clone $REPO_URL
+        git clone $REPO_URL
+    fi
 
     set -o errexit
-    cd dev-setup
+    # cd the repo we cloned in last step
+    if [[ -e dev-setup ]]; then
+        cd dev-setup
+    fi
     sudo apt-get install --yes sshpass
     pip install --user ansible
     set +o errexit
