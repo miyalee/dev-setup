@@ -29,7 +29,7 @@ main() {
         cat ~/.ssh/id_rsa.pub
         read -t 30 -p "ENTER to continue"
         if [[ $? -gt 128 ]]; then
-            echo "Abort..."
+            echo -e "\nAbort..."
             exit 1
         fi
     fi
@@ -42,7 +42,7 @@ main() {
     pip install --user ansible
     set +o errexit
 
-    ansible-playbook common.yml
+    ~/.local/bin/ansible-playbook common.yml
 }
 
 main "$@"
