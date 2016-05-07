@@ -1,0 +1,83 @@
+---
+- name: install packages
+  apt: name={{ item }}
+  become: true
+  with_items:
+      - vim
+      # /usr/share/doc/build-essential/essential-packages-list
+      - build-essential
+      - supervisor
+      - python-pip
+      - python-virtualenv
+      - python-dev
+      - python3-dev
+      - libffi-dev
+      - libssl-dev
+      - unzip
+      - p7zip-full
+      - git
+      - mercurial
+      - subversion
+      - ufw
+      - mosh
+      - openssh-server
+      - curl
+      - aria2
+      - tree
+      # mailtuils
+      - cmake
+      - gdebi
+      - debconf-utils
+      - htop
+      # apt-file # apt-file update
+      # fail2ban
+      - screen
+      - telnet
+      #- bind9utils
+      - dnsutils
+      - ntpdate
+      - davfs2
+      - openjdk-7-jdk
+      - shellcheck
+      - mysql-client
+      - libmysqlclient-dev
+      - mysql-server
+      - libzmq3-dev
+      - xclip
+      - clipit
+      - jq # and jo
+- name: install gui packages
+  apt: name={{ item }}
+  become: true
+  with_items:
+      - ibus-pinyin
+      - tinc
+      #- virtualbox-5.0_5.0.20-106931~Ubuntu~trusty_amd64.deb
+  when: gui is defined
+- name: add wildcard supervisord include
+  ini_file: dest=/etc/supervisor/supervisord.conf
+            section=include
+            option=files
+            value="/etc/supervisor/conf.d/*.conf {{ ansible_user_dir }}/srv/*/supervisord-*.conf"
+            backup=yes
+  become: true
+- name: Allow SSH, HTTP
+  ufw: rule=allow port={{ item }}
+  become: true
+  with_items:
+      - 22
+      - 80
+      - 443
+  when: sel is defined
+- name: Set firewall default policy
+  ufw: state=enabled policy=deny
+  become: true
+  when: sel is defined
+- name: check timezone
+  lineinfile: dest=/etc/timezone line="Asia/Shanghai" regexp="^.*$" backup=yes
+  become: true
+  register: timezone
+- name: change timezone
+  shell: dpkg-reconfigure --frontend noninteractive tzdata
+  become: true
+  when: timezone.changed
