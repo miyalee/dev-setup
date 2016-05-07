@@ -25,7 +25,7 @@ main() {
         ssh-keygen -t rsa -N "" ~/.ssh/id_rsa
     fi
     if ! ssh -o PasswordAuthentication=no -T git@$GITLAB_HOST; then
-        echo "Add following public keys to $GITLAB_URL/profile/keys:"
+        echo "Add following public key to $GITLAB_URL/profile/keys"
         cat ~/.ssh/id_rsa.pub
         read -t 30 -p "ENTER to continue"
         if [[ $? -gt 128 ]]; then
@@ -43,6 +43,14 @@ main() {
     set +o errexit
 
     ~/.local/bin/ansible-playbook common.yml
+    local action="$2"
+    if [[ $action == "--dev" || $action == "-all" ]]; then
+        ~/.local/bin/ansible-playbook dev.yml
+    fi
+
+    if [[ $action == "--desktop" || $action == "-all" ]]; then
+        ~/.local/bin/ansible-playbook desktop.yml
+    fi
 }
 
 main "$@"
