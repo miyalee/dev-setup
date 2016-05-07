@@ -1,0 +1,30 @@
+---
+- name: install desktop packages
+  apt: name={{ item }}
+  become: true
+  with_items:
+      - ibus-pinyin
+      - tinc
+      #- virtualbox-5.0_5.0.20-106931~Ubuntu~trusty_amd64.deb
+- name: get dropbox package name
+  shell: bash -c "curl --silent https://www.dropbox.com/en/install?os=lnx | grep -Po 'dropbox_[0-9_.]*_amd64.deb' | sort | uniq"
+  register: dropbox_grep
+  args:
+      creates: dropbox-latest.deb
+- name: get dropbox
+  #get_url: url="https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout}}" dest=dropbox-latest.deb
+  shell: curl --connect-timeout 3 --output dropbox-latest.deb --continue-at - --location "https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout }}"
+  args:
+      creates: dropbox-latest.deb
+- name: install dropbox
+  command: gdebi --non-interactive dropbox-latest.deb
+  args:
+      creates: "{{ ansible_env.HOME }}/.dropbox-dist/dropboxd"
+- name: get chrome
+  shell: curl --connect-timeout 3 --silent --continue-at - --location --remote-name https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  args:
+      creates: google-chrome-stable_current_amd64.deb
+- name: install chrome
+  command: gdebi --non-interactive google-chrome-stable_current_amd64.deb
+  args:
+      creates: /opt/google/chrome/chrome

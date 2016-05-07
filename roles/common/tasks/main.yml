@@ -46,14 +46,6 @@
       - xclip
       - clipit
       - jq # and jo
-- name: install gui packages
-  apt: name={{ item }}
-  become: true
-  with_items:
-      - ibus-pinyin
-      - tinc
-      #- virtualbox-5.0_5.0.20-106931~Ubuntu~trusty_amd64.deb
-  when: gui is defined
 - name: add wildcard supervisord include
   ini_file: dest=/etc/supervisor/supervisord.conf
             section=include
