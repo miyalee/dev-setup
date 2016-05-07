@@ -11,7 +11,7 @@
     - sqlite3
     - libfreetype6-dev
 - name: install rust
-  command: curl https://sh.rustup.rs -sSf | sh -s - -y
+  command: bash -c 'curl https://sh.rustup.rs -sSf | sh -s - -y'
   args:
       creates: "{{ ansible_env.HOME }}/.cargo/env"
   #TODO ~/.cargo/bin to $PATH
