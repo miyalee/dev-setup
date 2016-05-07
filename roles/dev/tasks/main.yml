@@ -12,7 +12,7 @@
     - libfreetype6-dev
     - bison
 - name: install rust
-  command: bash -c 'curl https://sh.rustup.rs -sSf | sh -s - -y'
+  command: bash -c 'curl https://sh.rustup.rs -sSf --connect-timeout 3| sh -s - -y'
   args:
       creates: "{{ ansible_env.HOME }}/.cargo/env"
   #TODO ~/.cargo/bin to $PATH
@@ -26,9 +26,9 @@
 - name: install nodejs
   shell: . {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install v6.0.0
 - name: install gvm
-  shell: bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+  shell: bash -c 'curl --connect-timeout 3 -sSL https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash'
   args:
-      creates: "{{ ansible_env.HOME }}/.gvm/scripts/gvm.sh"
+      creates: "{{ ansible_env.HOME }}/.gvm/scripts/gvm"
 - name: install go1.4
   shell: bash -c '. {{ ansible_env.HOME }}/.gvm/scripts/gvm && gvm install go1.4'
 - name: install go1.6.2
