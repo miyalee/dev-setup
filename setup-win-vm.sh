@@ -53,7 +53,7 @@ main() {
     ## VBoxManage modifyvm $VM --vrde on
     VBoxManage sharedfolder add $VM --name Downloads --hostpath "$HOME/Downloads" --automount
     # VBoxManage list extpacks
-    sudo VBoxManage extpack install "$HOME/Downloads/Oracle_VM_VirtualBox_Extension_Pack-5.0.20-106931.vbox-extpack"
+    sudo VBoxManage extpack install "Oracle_VM_VirtualBox_Extension_Pack-5.0.20-106931.vbox-extpack"
     #VBoxManage startvm $VM --type headless
 
     # install guest addon
