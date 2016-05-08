@@ -17,6 +17,11 @@ EOF
 }
 
 main() {
+    if ! grep -qiE 'xenial||trusty' /etc/os-release; then
+        echo "Sorry! we don't currently support that distro."
+        exit 1
+    fi
+
     set -o errexit
     sudo apt-get install --yes git python-virtualenv python-pip python-dev libffi-dev libssl-dev
     set +o errexit
