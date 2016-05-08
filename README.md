@@ -1,6 +1,8 @@
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/jiemolabs/dev-setup/master/setup.sh)
+export http_proxy=http://p.jiemo.io:8787 https_proxy=http://p.jiemo.io:8787
+bash -s - --all <(curl -s https://raw.githubusercontent.com/jiemolabs/dev-setup/master/setup.sh)
+#./setup.sh --all
 ```
 
 similar projects:
