@@ -45,7 +45,8 @@ main() {
         cd dev-setup
     fi
     sudo apt-get install --yes sshpass
-    pip install --user ansible
+    # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
+    pip install --user ansible markupsafe
     set +o errexit
 
     ~/.local/bin/ansible-playbook common.yml
