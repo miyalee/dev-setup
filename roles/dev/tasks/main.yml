@@ -13,8 +13,15 @@
     - libfreetype6-dev
     - bison
     - redis-server
+- name: upgrade mysql-server to 5.6
+  # http://dev.mysql.com/get/mysql-apt-config_0.3.5-1ubuntu14.04_all.deb
+  command: apt-get install --yes mysql-server-5.6 mysql-server-core-5.6 mysql-client-5.6 mysql-client-core-5.6
+  become: true
+  args:
+      creates: /etc/logcheck/ignore.d.server/mysql-server-5_6
+  when: ansible_distribution_release == 'trusty'
 - name: install rustup
-  command: bash -c 'curl https://sh.rustup.rs -sSf --connect-timeout 3| sh -s - -y'
+  command: bash -c 'curl https://sh.rustup.rs -sSf --connect-timeout 3 | sh -s - -y'
   args:
       creates: "{{ ansible_env.HOME }}/.cargo/env"
   #TODO ~/.cargo/bin to $PATH
