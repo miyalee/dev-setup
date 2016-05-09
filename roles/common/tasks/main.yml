@@ -36,7 +36,7 @@
       #- bind9utils
       - dnsutils
       - ntpdate
-      - openjdk-7-jdk
+      - "{% if ansible_distribution_release == 'trusty' %}openjdk-7-jdk{% else %}openjdk-8-jdk{% endif %}"
       - mysql-client
       - libmysqlclient-dev
       - mysql-server
