@@ -54,8 +54,14 @@ main() {
     pip install --user ansible markupsafe
     set +o errexit
 
-    ~/.local/bin/ansible-playbook common.yml
     local action="$1"
+
+    if [[ $action == "--mis" || $action == "--all" ]]; then
+        ~/.local/bin/ansible-playbook mis.yml
+    fi
+
+    ~/.local/bin/ansible-playbook common.yml
+
     if [[ $action == "--dev" || $action == "--all" ]]; then
         ~/.local/bin/ansible-playbook dev.yml
     fi
@@ -64,9 +70,6 @@ main() {
         ~/.local/bin/ansible-playbook desktop.yml
     fi
 
-    if [[ $action == "--mis" || $action == "--all" ]]; then
-        ~/.local/bin/ansible-playbook mis.yml
-    fi
 }
 
 main "$@"
