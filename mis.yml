@@ -1,0 +1,13 @@
+---
+- hosts: 127.0.0.1
+  gather_facts: yes
+  connection: local
+  vars_prompt:
+      - name: "ldap_username"
+        prompt: "owncloud(LDAP) username"
+        private: no
+      - name: "ldap_password"
+        prompt: "owncloud(LDAP) password"
+        private: yes
+  roles:
+     - mis

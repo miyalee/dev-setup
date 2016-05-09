@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=mount ~/owncloud
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Mount owncloud
+Name=Mount owncloud
+Comment[en_US]=
+Comment=

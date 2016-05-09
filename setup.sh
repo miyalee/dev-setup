@@ -63,6 +63,10 @@ main() {
     if [[ $action == "--desktop" || $action == "--all" ]]; then
         ~/.local/bin/ansible-playbook desktop.yml
     fi
+
+    if [[ $action == "--mis" || $action == "--all" ]]; then
+        ~/.local/bin/ansible-playbook mis.yml
+    fi
 }
 
 main "$@"
