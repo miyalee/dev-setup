@@ -15,5 +15,4 @@
   become: true
 - lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="https://cloud.jiemo.io/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
 - synchronize: src=mount.desktop dest="{{ ansible_env.HOME }}/.config/autostart/mount.desktop"
-- debug: msg="logout, then run 'mount ~/owncloud'"
-
+- debug: msg="logout, then login"
