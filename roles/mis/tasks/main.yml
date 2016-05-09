@@ -8,11 +8,13 @@
   become: true
   # ansible_user
 - user: name="{{ ansible_user_id }}" groups="davfs2" append=yes
+  become: true
 - file: path="{{ansible_env.HOME }}/owncloud" state=directory
 - file: path="{{ansible_env.HOME }}/.davfs2" state=directory
-- file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600
+- file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600 state=file
 - mount: name="{{ ansible_env.HOME }}/owncloud" src=https://cloud.jiemo.io/remote.php/webdav fstype=davfs opts=user,rw,noauto state=present
   become: true
 - lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="https://cloud.jiemo.io/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
+- file: path="{{ansible_env.HOME }}/.config/autostart" state=directory
 - synchronize: src=mount.desktop dest="{{ ansible_env.HOME }}/.config/autostart/mount.desktop"
 - debug: msg="logout, then login"
