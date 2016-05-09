@@ -36,7 +36,6 @@
       #- bind9utils
       - dnsutils
       - ntpdate
-      - davfs2
       - openjdk-7-jdk
       - mysql-client
       - libmysqlclient-dev

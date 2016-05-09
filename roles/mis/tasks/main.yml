@@ -1,0 +1,18 @@
+---
+- name: install packages
+  apt: name={{ item }}
+  become: true
+  with_items:
+    - davfs2
+- debconf: name='davfs' question='davfs2/suid_file' value='true' vtype='boolean'
+  become: true
+  # ansible_user
+- user: name="{{ ansible_user_id }}" groups="davfs2" append=yes
+- file: path="{{ansible_env.HOME }}/owncloud" state=directory
+- file: path="{{ansible_env.HOME }}/.davfs2" state=directory
+- file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600
+- mount: name="{{ ansible_env.HOME }}/owncloud" src=https://cloud.jiemo.io/remote.php/webdav fstype=davfs opts=user,rw,noauto state=present
+  become: true
+- lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="https://cloud.jiemo.io/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
+- debug: msg="logout, then run 'mount ~/owncloud'"
+
