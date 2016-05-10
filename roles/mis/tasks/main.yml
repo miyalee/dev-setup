@@ -12,9 +12,9 @@
 - file: path="{{ansible_env.HOME }}/owncloud" state=directory
 - file: path="{{ansible_env.HOME }}/.davfs2" state=directory
 - file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600 state=file
-- mount: name="{{ ansible_env.HOME }}/owncloud" src=https://cloud.jiemo.io/remote.php/webdav fstype=davfs opts=user,rw,noauto state=present
+- mount: name="{{ ansible_env.HOME }}/owncloud" src="{{ owncloud_url }}/remote.php/webdav" fstype=davfs opts=user,rw,noauto state=present
   become: true
-- lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="https://cloud.jiemo.io/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
+- lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="{{ owncloud_url }}/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
 - file: path="{{ansible_env.HOME }}/.config/autostart" state=directory
 - synchronize: src=mount.desktop dest="{{ ansible_env.HOME }}/.config/autostart/mount.desktop"
 - debug: msg="logout, then login"

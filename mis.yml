@@ -3,6 +3,9 @@
   gather_facts: yes
   connection: local
   vars_prompt:
+      - name: owncloud_url
+        prompt: "owncloud web address(https://example.com)"
+        default: https://cloud.jiemo.io
       - name: "ldap_username"
         prompt: "owncloud(LDAP) username"
         private: no
