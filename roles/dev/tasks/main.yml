@@ -21,7 +21,7 @@
       creates: /etc/logcheck/ignore.d.server/mysql-server-5_6
   when: ansible_distribution_release == 'trusty'
 - name: install rustup
-  command: bash -c 'curl https://sh.rustup.rs -sSf --connect-timeout 3 | sh -s - -y'
+  shell: curl https://sh.rustup.rs -sSf --connect-timeout 3 | sh -s - -y
   args:
       creates: "{{ ansible_env.HOME }}/.cargo/env"
   #TODO ~/.cargo/bin to $PATH
@@ -29,13 +29,13 @@
   command: bash -c '. {{ ansible_env.HOME }}/.cargo/env && rustup default nightly'
   # bash rustup.sh --channel=nightly
 - name: install nvm
-  shell : curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+  shell: curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   args:
       creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
 - name: install nodejs
   shell: . {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install v6.0.0
 - name: install gvm
-  shell: bash -c 'curl --connect-timeout 3 -sSL https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash'
+  shell: curl --connect-timeout 3 -sSL https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash
   args:
       creates: "{{ ansible_env.HOME }}/.gvm/scripts/gvm"
 - name: install go1.4
@@ -45,6 +45,6 @@
 - name: import rvm key
   shell: gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 - name: install rvm with rails
-  shell: bash -c 'curl -sSL https://get.rvm.io | bash -s stable --rails'
+  shell: curl -sSL https://get.rvm.io | bash -s stable --rails
   args:
       creates: "{{ ansible_env.HOME }}/.rvm/scripts/rvm"
