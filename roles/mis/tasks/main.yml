@@ -4,7 +4,7 @@
   become: true
   with_items:
     - davfs2
-- debconf: name='davfs' question='davfs2/suid_file' value='true' vtype='boolean'
+- debconf: name='davfs2' question='davfs2/suid_file' value='true' vtype='boolean'
   become: true
   # ansible_user
 - user: name="{{ ansible_user_id }}" groups="davfs2" append=yes
