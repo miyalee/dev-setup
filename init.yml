@@ -1,0 +1,31 @@
+---
+- hosts: all
+  gather_facts: yes
+  # sudo apt-get install sshpass
+  # sshpass will not ignore host key, so it may hang
+  # ansible-playbook -i host1, -u root -e targeted_user=xxx --ask-pass -vvv init.yml
+  remote_user: root
+  vars:
+      #- targeted_user: "{{ lookup('env', 'USER') }}"
+      # /etc/login.defs
+      # https://wiki.debian.org/AccountHandlingInMaintainerScripts
+      # https://github.com/openshift/origin/blob/master/pkg/cmd/infra/deployer/deployer.go
+      - targeted_user: deployer
+      - pubkey_file: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa.pub"
+  tasks:
+      #- apt: upgrade=yes update_cache=yes
+      #  become: true
+      - apt: name=python
+        become: true
+      # group deployer gid=35001
+      - user: name={{ targeted_user }} shell=/bin/bash uid=35001
+        become: true
+      - name: Set up authorized_keys
+        authorized_key: user="{{ targeted_user }}" key="{{ item }}"
+        with_file:
+          - "{{ pubkey_file }}"
+        become: true
+      - name: make sure {{ targeted_user }} can sudo as root
+        lineinfile: dest=/etc/sudoers state=present line='{{ targeted_user}} ALL= NOPASSWD:ALL' validate='visudo -cf %s'
+        become: true
+
