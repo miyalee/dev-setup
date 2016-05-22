@@ -38,13 +38,19 @@
   shell: curl --connect-timeout 3 -sSL https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer | bash
   args:
       creates: "{{ ansible_env.HOME }}/.gvm/scripts/gvm"
-- name: install go1.4
+- name: install go1.4 on trusty
   shell: bash -c '. {{ ansible_env.HOME }}/.gvm/scripts/gvm && gvm install go1.4'
+  when: ansible_distribution_release == 'trusty'
+- name: install go1.4
+  # https://github.com/golang/go/issues/13114#issuecomment-186922245
+  shell: bash -c '. {{ ansible_env.HOME }}/.gvm/scripts/gvm && CGO_ENABLED=0 gvm install go1.4'
+  when: ansible_distribution_release != 'trusty'
 - name: install go1.6.2
   shell: bash -c '. {{ ansible_env.HOME }}/.gvm/scripts/gvm && gvm use go1.4 && gvm install go1.6.2'
 - name: import rvm key
   shell: gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 - name: install rvm with rails
-  shell: curl -sSL https://get.rvm.io | bash -s stable --rails
+  # --rails
+  shell: curl -sSL https://get.rvm.io | bash -s stable
   args:
       creates: "{{ ansible_env.HOME }}/.rvm/scripts/rvm"

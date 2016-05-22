@@ -1,13 +1,12 @@
 #!/bin/bash
 #
-# Copyright (C) 2016 by Lele Long <longlele@jiemo.io>
 # This file is free software, distributed under the GPL License.
 #
 # Setup dev environment for Ubuntu 14.04/16.04 x86_64(NO i386) on Bash(NO sh, or zsh)
 #
 cd "$(dirname "$0")"
 
-declare -r GITLAB_HOST=git.jiemo.io
+declare -r GITLAB_HOST=git.example.com
 declare -r GITLAB_URL=https://$GITLAB_HOST
 declare -r REPO_URL=git@$GITLAB_HOST:infra/dev-setup
 
@@ -41,6 +40,7 @@ main() {
             fi
         fi
 
+        set -o errexit
         git clone $REPO_URL
     fi
 
@@ -57,7 +57,9 @@ main() {
     local action="$1"
 
     if [[ $action == "--mis" || $action == "--all" ]]; then
-        ~/.local/bin/ansible-playbook mis.yml
+        if [[ ! -e ~/.davfs2/secrets ]]; then
+            ~/.local/bin/ansible-playbook mis.yml
+        fi
     fi
 
     ~/.local/bin/ansible-playbook common.yml

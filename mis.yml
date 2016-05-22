@@ -2,15 +2,19 @@
 - hosts: 127.0.0.1
   gather_facts: yes
   connection: local
+  # http://stackoverflow.com/questions/25466675/ansible-to-conditionally-prompt-for-a-variable
   vars_prompt:
       - name: owncloud_url
         prompt: "owncloud web address(https://example.com)"
-        default: https://cloud.jiemo.io
+        default: https://example.com
+        private: no
       - name: "ldap_username"
         prompt: "owncloud(LDAP) username"
+        default: exampleuser
         private: no
       - name: "ldap_password"
         prompt: "owncloud(LDAP) password"
+        default: examplepasswd
         private: yes
   roles:
      - mis
