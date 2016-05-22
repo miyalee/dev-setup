@@ -8,9 +8,9 @@
       - build-essential
       - supervisor
       - python-pip
-      - python-virtualenv
       - python-dev
       - python3-dev
+      - "{% if ansible_distribution_release in ['trusty', 'jessie'] %}python-virtualenv{% else %}virtualenv{% endif %}"
       - libffi-dev
       - libssl-dev
       - unzip
@@ -39,10 +39,7 @@
       - "{% if ansible_distribution_release == 'trusty' %}openjdk-7-jdk{% else %}openjdk-8-jdk{% endif %}"
       - mysql-client
       - libmysqlclient-dev
-      - mysql-server
       - libzmq3-dev
-      - xclip
-      - clipit
       - jq # and jo
 - name: add wildcard supervisord include
   ini_file: dest=/etc/supervisor/supervisord.conf
@@ -58,6 +55,10 @@
       - 22
       - 80
       - 443
+  when: sel is defined
+- name: Allow mosh in UFW
+  ufw: rule=allow port=60000:61000 proto=udp
+  become: true
   when: sel is defined
 - name: Set firewall default policy
   ufw: state=enabled policy=deny
