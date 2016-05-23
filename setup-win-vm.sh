@@ -1,9 +1,8 @@
 #!/bin/bash
 #
-# Copyright (C) 2016 by Lele Long <longlele@jiemo.me>
 # This file is free software, distributed under the GPL License.
 #
-# <BRIEF DESCRIPTION HERE>
+# setup windows virutalbox vm
 #
 cd "$(dirname "$0")"
 

@@ -1,6 +1,6 @@
 ### install
 ```bash
-export http_proxy=http://p.jiemo.io:8787 https_proxy=http://p.jiemo.io:8787 # Mainland joke
+# export http_proxy=http://example.com https_proxy=http://example.com
 bash -s - --all <(curl -s https://raw.githubusercontent.com/jiemolabs/dev-setup/master/setup.sh)
 #./setup.sh --all
 ```

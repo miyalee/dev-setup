@@ -4,7 +4,8 @@
   become: true
   with_items:
       - ibus-pinyin
-      - tinc
+      - xclip
+      - clipit
 - name: get dropbox package name
   shell: bash -c "curl --silent https://www.dropbox.com/en/install?os=lnx | grep -Po 'dropbox_[0-9_.]*_amd64.deb' | sort | uniq"
   register: dropbox_grep

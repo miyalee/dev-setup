@@ -7,14 +7,15 @@
 - debconf: name='davfs2' question='davfs2/suid_file' value='true' vtype='boolean'
   become: true
   # ansible_user
+  # sudo usermod -aG davfs2 xxx
 - user: name="{{ ansible_user_id }}" groups="davfs2" append=yes
   become: true
 - file: path="{{ansible_env.HOME }}/owncloud" state=directory
 - file: path="{{ansible_env.HOME }}/.davfs2" state=directory
-- file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600 state=file
+- file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600 state=touch
+- lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="{{ owncloud_url }}/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
 - mount: name="{{ ansible_env.HOME }}/owncloud" src="{{ owncloud_url }}/remote.php/webdav" fstype=davfs opts=user,rw,noauto state=present
   become: true
-- lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="{{ owncloud_url }}/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
 - file: path="{{ansible_env.HOME }}/.config/autostart" state=directory
 - synchronize: src=mount.desktop dest="{{ ansible_env.HOME }}/.config/autostart/mount.desktop"
 - debug: msg="logout, then login"
