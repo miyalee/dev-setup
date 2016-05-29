@@ -21,6 +21,7 @@
   args:
       creates: /etc/logcheck/ignore.d.server/mysql-server-5_6
   when: ansible_distribution_release == 'trusty'
+# https://zealdocs.org/download.html
 - name: install rustup
   shell: curl https://sh.rustup.rs -sSf --connect-timeout 3 | sh -s - -y
   args:

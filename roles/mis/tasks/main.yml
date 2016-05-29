@@ -13,9 +13,11 @@
 - file: path="{{ansible_env.HOME }}/owncloud" state=directory
 - file: path="{{ansible_env.HOME }}/.davfs2" state=directory
 - file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600 state=touch
-- lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets" line="{{ owncloud_url }}/remote.php/webdav {{ ldap_username }} \"{{ ldap_password }}\""
-- mount: name="{{ ansible_env.HOME }}/owncloud" src="{{ owncloud_url }}/remote.php/webdav" fstype=davfs opts=user,rw,noauto state=present
+- lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets"
+              line="{{ owncloud_url }}/remote.php/webdav {{ owncloud_username }} \"{{ owncloud_password }}\""
+- mount: name="{{ ansible_env.HOME }}/owncloud"
+         src="{{ owncloud_url }}/remote.php/webdav" fstype=davfs opts=user,rw,noauto state=present
   become: true
 - file: path="{{ansible_env.HOME }}/.config/autostart" state=directory
 - synchronize: src=mount.desktop dest="{{ ansible_env.HOME }}/.config/autostart/mount.desktop"
-- debug: msg="logout, then login"
+- debug: msg="change username and password at {{ ansible_env.HOME }}/.davfs2/secrets, logout, then login"
