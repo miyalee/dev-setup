@@ -7,18 +7,18 @@
       - owncloud_username: exampleuser
       - owncloud_password: examplepasswd
   # http://stackoverflow.com/questions/25466675/ansible-to-conditionally-prompt-for-a-variable
-  vars_prompt:
-     #- name: owncloud_url
-     #  prompt: "owncloud web address(https://example.com)"
-     #  default: https://example.com
-     #  private: no
-     #- name: "owncloud_username"
-     #  prompt: "owncloud(LDAP) username"
-     #  default: exampleuser
-     #  private: no
-     #- name: "owncloud_password"
-     #  prompt: "owncloud(LDAP) password"
-     #  default: examplepasswd
-     #  private: yes
+  #vars_prompt:
+  #- name: owncloud_url
+  #  prompt: "owncloud web address(https://example.com)"
+  #  default: https://example.com
+  #  private: no
+  #- name: "owncloud_username"
+  #  prompt: "owncloud(LDAP) username"
+  #  default: exampleuser
+  #  private: no
+  #- name: "owncloud_password"
+  #  prompt: "owncloud(LDAP) password"
+  #  default: examplepasswd
+  #  private: yes
   roles:
      - mis
