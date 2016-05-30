@@ -52,26 +52,26 @@ main() {
     sudo apt-get install --yes sshpass
     # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
     pip install --user ansible markupsafe
+    export PATH=$PATH:$HOME/.local/bin
     set +o errexit
 
     local action="$1"
 
     if [[ $action == "--mis" || $action == "--all" ]]; then
         if [[ ! -e ~/.davfs2/secrets ]]; then
-            ~/.local/bin/ansible-playbook mis.yml
+            ansible-playbook mis.yml
         fi
     fi
 
-    ~/.local/bin/ansible-playbook common.yml
+    ansible-playbook -i 127.0.0.1, --connection=local common.yml
 
     if [[ $action == "--dev" || $action == "--all" ]]; then
-        ~/.local/bin/ansible-playbook dev.yml
+        ansible-playbook dev.yml
     fi
 
     if [[ $action == "--desktop" || $action == "--all" ]]; then
-        ~/.local/bin/ansible-playbook desktop.yml
+        ansible-playbook desktop.yml
     fi
-
 }
 
 main "$@"

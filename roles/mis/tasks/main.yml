@@ -10,8 +10,8 @@
   # sudo usermod -aG davfs2 xxx
 - user: name="{{ ansible_user_id }}" groups="davfs2" append=yes
   become: true
-- file: path="{{ansible_env.HOME }}/owncloud" state=directory
-- file: path="{{ansible_env.HOME }}/.davfs2" state=directory
+- file: path="{{ ansible_env.HOME }}/owncloud" state=directory
+- file: path="{{ ansible_env.HOME }}/.davfs2" state=directory
 - file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600 state=touch
 - lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets"
               line="{{ owncloud_url }}/remote.php/webdav {{ owncloud_username }} \"{{ owncloud_password }}\""
