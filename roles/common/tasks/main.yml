@@ -37,7 +37,7 @@
       - dnsutils
       - ntpdate
       - "{% if ansible_distribution_release == 'trusty' %}openjdk-7-jdk{% else %}openjdk-8-jdk{% endif %}"
-      - mysql-client-5.6
+      - "{% if ansible_distribution_release == 'jessie' %}mysql-client{% else %}mysql-client-5.5{% endif %}"
       - libmysqlclient-dev
       - libzmq3-dev
       - jq # and jo
