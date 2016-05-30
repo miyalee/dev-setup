@@ -21,6 +21,9 @@ export http_proxy=http://example.com https_proxy=http://example.com
 
     ln -s /usr/lib/python2.7/dist-packages/apt* $VIRTUAL_ENV/lib/python*/site-packages
 
+### speedup gvm
+
+    rsynz -avzp --progress ~/.gvm/archive/go NEW_USER@NEW_HOST:.gvm/archive/
 
 ### similar projects:
 * https://github.com/thoughtbot/laptop
