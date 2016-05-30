@@ -14,9 +14,10 @@
     - bison
     - redis-server
     - mysql-server-5.6
+    - ipython
 - name: upgrade mysql-server to 5.6
   # http://dev.mysql.com/get/mysql-apt-config_0.3.5-1ubuntu14.04_all.deb
-  command: apt-get install --yes mysql-server-5.6 mysql-server-core-5.6 mysql-client-5.6 mysql-client-core-5.6
+  command: DEBIAN_FRONTEND=noninteractive apt-get install --yes mysql-server-5.6 mysql-server-core-5.6 mysql-client-5.6 mysql-client-core-5.6
   become: true
   args:
       creates: /etc/logcheck/ignore.d.server/mysql-server-5_6
