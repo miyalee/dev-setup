@@ -72,3 +72,6 @@
   shell: dpkg-reconfigure --frontend noninteractive tzdata
   become: true
   when: timezone.changed
+- name: set default editor
+  alternatives: name=editor path=/usr/bin/vim.basic
+  become: true
