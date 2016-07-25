@@ -14,6 +14,7 @@ export http_proxy=http://example.com https_proxy=http://example.com
 
 ### setuptools version conflict
 
+    # http://stackoverflow.com/questions/17586987/how-to-solve-pkg-resources-versionconflict-error-during-bin-python-bootstrap-py
     pip install --user ansible-2.1.0.0.tar.gz
 
 
