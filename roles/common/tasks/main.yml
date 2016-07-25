@@ -7,7 +7,6 @@
       - vim
       # /usr/share/doc/build-essential/essential-packages-list
       - build-essential
-      - supervisor
       - python-pip
       - python-dev
       - python3-dev
@@ -43,13 +42,6 @@
       - libmysqlclient-dev
       - libzmq3-dev
       - jq # and jo
-- name: add wildcard supervisord include
-  ini_file: dest=/etc/supervisor/supervisord.conf
-            section=include
-            option=files
-            value="/etc/supervisor/conf.d/*.conf {{ ansible_user_dir }}/srv/*/supervisord-*.conf"
-            backup=yes
-  become: true
 - name: Allow SSH, HTTP
   ufw: rule=allow port={{ item }}
   become: true
