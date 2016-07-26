@@ -29,9 +29,11 @@
   ini_file: dest="{{ ansible_env.HOME }}/.pip/pip.conf" section=global option=index-url value=http://pypi.douban.com/simple backup=yes
 # https://zealdocs.org/download.html
 - name: install rustup
-  shell: curl https://sh.rustup.rs -sSf --connect-timeout 3 | sh -s - -y
+  shell: curl https://sh.rustup.rs -sSf --connect-timeout 10 | sh -s - -y
   args:
       creates: "{{ ansible_env.HOME }}/.cargo/env"
+  # TODO pipeline error will not propagate
+  failed_when: "'Operation timed out' in command_result.stderr"
   #TODO ~/.cargo/bin to $PATH
 - name: install rust nightly
   command: bash -c '. {{ ansible_env.HOME }}/.cargo/env && rustup default nightly'

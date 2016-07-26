@@ -3,13 +3,14 @@
   apt: name={{ item }}
   become: true
   with_items:
+      - aptitude
       - vim
       # /usr/share/doc/build-essential/essential-packages-list
       - build-essential
-      - supervisor
       - python-pip
       - python-dev
       - python3-dev
+      - python-apt
       - "{% if ansible_distribution_release in ['trusty', 'jessie'] %}python-virtualenv{% else %}virtualenv{% endif %}"
       - libffi-dev
       - libssl-dev
@@ -37,17 +38,10 @@
       - dnsutils
       - ntpdate
       - "{% if ansible_distribution_release == 'trusty' %}openjdk-7-jdk{% else %}openjdk-8-jdk{% endif %}"
-      - "{% if ansible_distribution_release == 'jessie' %}mysql-client{% else %}mysql-client-5.5{% endif %}"
+      - "{% if ansible_distribution_release in ['jessie', 'xenial'] %}mysql-client{% else %}mysql-client-5.5{% endif %}"
       - libmysqlclient-dev
       - libzmq3-dev
       - jq # and jo
-- name: add wildcard supervisord include
-  ini_file: dest=/etc/supervisor/supervisord.conf
-            section=include
-            option=files
-            value="/etc/supervisor/conf.d/*.conf {{ ansible_user_dir }}/srv/*/supervisord-*.conf"
-            backup=yes
-  become: true
 - name: Allow SSH, HTTP
   ufw: rule=allow port={{ item }}
   become: true

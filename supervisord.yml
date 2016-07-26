@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: yes
+  tasks:
+    - name: install packages
+      apt: name={{ item }}
+      become: true
+      with_items:
+          - supervisor
+    - name: add wildcard supervisord include
+      ini_file: dest=/etc/supervisor/supervisord.conf
+                section=include
+                option=files
+                value="/etc/supervisor/conf.d/*.conf {{ ansible_user_dir }}/srv/*/supervisord-*.conf"
+                backup=yes
+      become: true
