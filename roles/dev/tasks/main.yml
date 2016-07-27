@@ -13,8 +13,7 @@
     - libfreetype6-dev
     - bison
     - redis-server
-    - mysql-client-5.6
-    - mysql-server-5.6
+    - "{% if ansible_distribution_release in ['jessie', 'xenial'] %}mysql-server{% else %}mysql-server-5.6{% endif %}"
     - ipython
     - manpages-dev
     - nginx
