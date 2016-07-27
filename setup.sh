@@ -50,7 +50,7 @@ main() {
         cd dev-setup
     fi
     sudo apt-get install --yes sshpass python-pip
-    sudo pip install -U setuptools
+    sudo pip install --upgrade setuptools
     # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
     pip install --user ansible markupsafe
     export PATH=$PATH:$HOME/.local/bin
