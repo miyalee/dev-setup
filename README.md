@@ -28,6 +28,7 @@ export http_proxy=http://example.com https_proxy=http://example.com
 
 ### similar projects:
 * https://github.com/thoughtbot/laptop
+* https://github.com/donnemartin/dev-setup
 
 ### references:
 * https://robots.thoughtbot.com/laptop-setup-for-an-awesome-development-environment
