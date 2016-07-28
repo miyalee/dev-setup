@@ -44,15 +44,15 @@ main() {
         git clone $REPO_URL
     fi
 
+    sudo --set-home pip install --upgrade setuptools
+    # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
+    pip install --user ansible markupsafe
     set -o errexit
     # cd the repo we cloned in last step
     if [[ -e dev-setup ]]; then
         cd dev-setup
     fi
     sudo apt-get install --yes sshpass python-pip
-    sudo --set-home /root pip install --upgrade setuptools
-    # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
-    pip install --user ansible markupsafe
     export PATH=$PATH:$HOME/.local/bin
     set +o errexit
 
