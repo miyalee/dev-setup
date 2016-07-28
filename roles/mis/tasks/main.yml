@@ -13,6 +13,7 @@
 - file: path="{{ ansible_env.HOME }}/owncloud" state=directory
 - file: path="{{ ansible_env.HOME }}/.davfs2" state=directory
 - file: path="{{ ansible_env.HOME }}/.davfs2/secrets" mode=600 state=touch
+- file: path="/usr/sbin/mount.davfs" mode="u=rwsr,g=xr,o=x"
 - lineinfile: dest="{{ ansible_env.HOME }}/.davfs2/secrets"
               line="{{ owncloud_url }}/remote.php/webdav {{ owncloud_username }} \"{{ owncloud_password }}\""
 - mount: name="{{ ansible_env.HOME }}/owncloud"
