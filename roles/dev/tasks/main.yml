@@ -33,6 +33,7 @@
   args:
       creates: "{{ ansible_env.HOME }}/.cargo/env"
   # TODO pipeline error will not propagate
+  register: command_result
   failed_when: "'Operation timed out' in command_result.stderr"
   #TODO ~/.cargo/bin to $PATH
 - name: install rust nightly
