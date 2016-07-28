@@ -34,7 +34,7 @@
       creates: "{{ ansible_env.HOME }}/.cargo/env"
   # TODO pipeline error will not propagate
   register: command_result
-  failed_when: "'Operation timed out' in command_result.stderr"
+  failed_when: "command_result.stderr and 'Operation timed out' in command_result.stderr"
   #TODO ~/.cargo/bin to $PATH
 - name: install rust nightly
   command: bash -c '. {{ ansible_env.HOME }}/.cargo/env && rustup default nightly'
