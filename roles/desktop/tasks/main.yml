@@ -12,6 +12,7 @@
   register: dropbox_grep
   args:
       creates: dropbox-latest.deb
+  changed_when: False
 - name: get dropbox
   #get_url: url="https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout}}" dest=dropbox-latest.deb
   shell: curl --connect-timeout 3 --output dropbox-latest.deb --continue-at - --location "https://www.dropbox.com/download?dl=packages/ubuntu/{{ dropbox_grep.stdout }}"

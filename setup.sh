@@ -44,7 +44,7 @@ main() {
         git clone $REPO_URL
     fi
 
-    sudo --set-home pip install --upgrade setuptools
+    #sudo --set-home pip install --upgrade setuptools
     # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
     pip install --user ansible markupsafe
     set -o errexit
@@ -60,18 +60,18 @@ main() {
 
     if [[ $action == "--mis" || $action == "--all" ]]; then
         if [[ ! -e ~/.davfs2/secrets ]]; then
-            ansible-playbook mis.yml
+            ansible-playbook -i 127.0.0.1, --connection=local mis.yml
         fi
     fi
 
     ansible-playbook -i 127.0.0.1, --connection=local common.yml
 
     if [[ $action == "--dev" || $action == "--all" ]]; then
-        ansible-playbook dev.yml
+        ansible-playbook -i 127.0.0.1, --connection=local dev.yml
     fi
 
     if [[ $action == "--desktop" || $action == "--all" ]]; then
-        ansible-playbook desktop.yml
+        ansible-playbook -i 127.0.0.1, --connection=local desktop.yml
     fi
 }
 
