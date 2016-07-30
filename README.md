@@ -1,6 +1,6 @@
 ### install
 ```bash
-bash -s - --all <(curl -s https://raw.githubusercontent.com/jiemolabs/dev-setup/master/setup.sh)
+curl -sSfL https://raw.githubusercontent.com/jiemolabs/dev-setup/master/setup.sh | bash -s - --all
 #./setup.sh --all
 ```
 
