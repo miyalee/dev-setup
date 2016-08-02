@@ -6,9 +6,9 @@
 #
 cd "$(dirname "$0")"
 
-declare -r GITLAB_HOST=git.example.com
+declare -r GITLAB_HOST=github.com
 declare -r GITLAB_URL=https://$GITLAB_HOST
-declare -r REPO_URL=git@$GITLAB_HOST:infra/dev-setup
+declare -r REPO_URL=https://$GITLAB_HOST/jiemolabs/dev-setup.git
 
 usage() {
     cat <<EOF
@@ -33,7 +33,7 @@ main() {
         if ! ssh -o PasswordAuthentication=no -T git@$GITLAB_HOST; then
             echo "Add following public key to $GITLAB_URL/profile/keys"
             cat ~/.ssh/id_rsa.pub
-            read -t 30 -p "ENTER to continue"
+            read -r -t 30 -p "ENTER to continue"
             if [[ $? -gt 128 ]]; then
                 echo -e "\nAbort..."
                 exit 1
@@ -44,15 +44,15 @@ main() {
         git clone $REPO_URL
     fi
 
+    #sudo --set-home pip install --upgrade setuptools
+    # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
+    pip install --user ansible markupsafe
     set -o errexit
     # cd the repo we cloned in last step
     if [[ -e dev-setup ]]; then
         cd dev-setup
     fi
     sudo apt-get install --yes sshpass python-pip
-    sudo pip install --upgrade setuptools
-    # https://github.com/rdickert/project-quicksilver/issues/6#issuecomment-20822097
-    pip install --user ansible markupsafe
     export PATH=$PATH:$HOME/.local/bin
     set +o errexit
 
@@ -60,18 +60,18 @@ main() {
 
     if [[ $action == "--mis" || $action == "--all" ]]; then
         if [[ ! -e ~/.davfs2/secrets ]]; then
-            ansible-playbook mis.yml
+            ansible-playbook -i 127.0.0.1, --connection=local mis.yml
         fi
     fi
 
     ansible-playbook -i 127.0.0.1, --connection=local common.yml
 
     if [[ $action == "--dev" || $action == "--all" ]]; then
-        ansible-playbook dev.yml
+        ansible-playbook -i 127.0.0.1, --connection=local dev.yml
     fi
 
     if [[ $action == "--desktop" || $action == "--all" ]]; then
-        ansible-playbook desktop.yml
+        ansible-playbook -i 127.0.0.1, --connection=local desktop.yml
     fi
 }
 
