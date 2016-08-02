@@ -26,11 +26,11 @@ main() {
     set +o errexit
 
     # if we are not inside the repo
-    if ! git remote -v >/dev/null; then
+    if ! git remote -v &>/dev/null; then
         if [[ ! -e ~/.ssh/id_rsa ]]; then
-            ssh-keygen -t rsa -N "" ~/.ssh/id_rsa
+            ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
         fi
-        if ! ssh -o PasswordAuthentication=no -T git@$GITLAB_HOST; then
+        if ! ssh -o PasswordAuthentication=no -T git@$GITLAB_HOST &>/dev/null; then
             echo "Add following public key to $GITLAB_URL/profile/keys"
             cat ~/.ssh/id_rsa.pub
             read -r -t 30 -p "ENTER to continue"
