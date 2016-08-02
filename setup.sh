@@ -6,9 +6,9 @@
 #
 cd "$(dirname "$0")"
 
-declare -r GITLAB_HOST=git.example.com
+declare -r GITLAB_HOST=github.com
 declare -r GITLAB_URL=https://$GITLAB_HOST
-declare -r REPO_URL=git@$GITLAB_HOST:infra/dev-setup
+declare -r REPO_URL=https://$GITLAB_HOST/jiemolabs/dev-setup.git
 
 usage() {
     cat <<EOF
@@ -33,7 +33,7 @@ main() {
         if ! ssh -o PasswordAuthentication=no -T git@$GITLAB_HOST; then
             echo "Add following public key to $GITLAB_URL/profile/keys"
             cat ~/.ssh/id_rsa.pub
-            read -t 30 -p "ENTER to continue"
+            read -r -t 30 -p "ENTER to continue"
             if [[ $? -gt 128 ]]; then
                 echo -e "\nAbort..."
                 exit 1
