@@ -60,18 +60,18 @@ main() {
 
     if [[ $action == "--mis" || $action == "--all" ]]; then
         if [[ ! -e ~/.davfs2/secrets ]]; then
-            ansible-playbook -i 127.0.0.1, --connection=local mis.yml
+            ~/.local/bin/ansible-playbook -i 127.0.0.1, --connection=local mis.yml
         fi
     fi
 
-    ansible-playbook -i 127.0.0.1, --connection=local common.yml
+    ~/.local/bin/ansible-playbook -i 127.0.0.1, --connection=local common.yml
 
     if [[ $action == "--dev" || $action == "--all" ]]; then
-        ansible-playbook -i 127.0.0.1, --connection=local dev.yml
+        ~/.local/bin/ansible-playbook -i 127.0.0.1, --connection=local dev.yml
     fi
 
     if [[ $action == "--desktop" || $action == "--all" ]]; then
-        ansible-playbook -i 127.0.0.1, --connection=local desktop.yml
+        ~/.local/bin/ansible-playbook -i 127.0.0.1, --connection=local desktop.yml
     fi
 }
 
